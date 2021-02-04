@@ -26,7 +26,7 @@ namespace CarRental.Business.Concrete
 
         public Brand GetById(int brandId)
         {
-            return _brandDal.GetById(brandId);
+            return _brandDal.Get(b => b.Id == brandId);
         }
 
         public List<Brand> GetAll()

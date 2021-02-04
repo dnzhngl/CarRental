@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CarRental.DataAccess.Abstract
 {
-    public interface IBrandDal : IEntityRepository<Brand>
+    public interface IColorDal : IEntityRepository<Color>
     {
     }
 }

@@ -5,17 +5,17 @@ using System.Text;
 
 namespace CarRental.Entities.Concrete
 {
-    public class Vehicle : IEntity
+    public class Car : IEntity
     {
         public int Id { get; set; }
         public int BrandId { get; set; }
-        public int VehicleTypeId { get; set; }
+        public int CarTypeId { get; set; }
         public int ColorId { get; set; }
 
-        public int Capacity { get; set; }
+        public byte Capacity { get; set; }
+        public string Model { get; set; }
         public string ModelYear { get; set; }
         public double DailyPrice { get; set; }
         public string Description { get; set; }
-        public int NumberOfCarsAvailable { get; set; }
     }
 }

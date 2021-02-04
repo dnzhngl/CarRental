@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CarRental.Entities.Concrete
 {
-    public class VehicleType : IEntity
+    public class CarType : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
