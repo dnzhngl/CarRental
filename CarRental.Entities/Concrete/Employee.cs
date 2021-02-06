@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CarRental.Entities.Concrete
 {
-    public class Employee : IUser, IEntity
+    public class Employee : IEntity, IUser
     {
         public int Id { get ; set ; }
         public string IdentityNo { get ; set ; }
@@ -17,6 +17,7 @@ namespace CarRental.Entities.Concrete
         public string Password { get ; set ; }
         public DateTime JoinDate { get; set; }
         public string Position { get; set; }
+
         public int DepartmantId { get; set; }
         public Department Department { get; set; }
     }

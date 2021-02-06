@@ -14,27 +14,27 @@ namespace CarRental.Business.Concrete
         {
             _customerDal = customerDal;
         }
-        public void Add(Customer customer)
+        public void Add(IndividualCustomer customer)
         {
             _customerDal.Add(customer);
         }
 
-        public void Delete(Customer customer)
+        public void Delete(IndividualCustomer customer)
         {
             _customerDal.Delete(customer);
         }
 
-        public List<Customer> GetAll()
+        public List<IndividualCustomer> GetAll()
         {
             return _customerDal.GetAll();
         }
 
-        public Customer GetById(int customerId)
+        public IndividualCustomer GetById(int customerId)
         {
             return _customerDal.Get(c => c.Id == customerId);
         }
 
-        public void Update(Customer customer)
+        public void Update(IndividualCustomer customer)
         {
             _customerDal.Update(customer);
         }

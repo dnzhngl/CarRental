@@ -7,10 +7,10 @@ namespace CarRental.Business.Abstract
 {
     public interface ICustomerService
     {
-        List<Customer> GetAll();
-        Customer GetById(int customerId);
-        void Add(Customer customer);
-        void Delete(Customer customer);
-        void Update(Customer customer);
+        List<IndividualCustomer> GetAll();
+        IndividualCustomer GetById(int customerId);
+        void Add(IndividualCustomer customer);
+        void Delete(IndividualCustomer customer);
+        void Update(IndividualCustomer customer);
     }
 }
