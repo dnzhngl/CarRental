@@ -37,22 +37,21 @@ namespace CarRental.DataAccess.Concrete.InMemory
 
         public Brand Get(Expression<Func<Brand, bool>> filter)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Brand> GetAll()
-        {
-            return _brands;
+            var query = filter.Compile();
+            return _brands.SingleOrDefault(query.Invoke);
         }
 
         public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public Brand GetById(int brandId)
-        {
-            return _brands.SingleOrDefault(b => b.Id == brandId);
+            if (filter == null)
+            {
+                return _brands;
+            }
+            else
+            {
+                var query = filter.Compile();
+                return _brands.Where(query.Invoke).ToList();
+            }
         }
 
         public void Update(Brand brand)

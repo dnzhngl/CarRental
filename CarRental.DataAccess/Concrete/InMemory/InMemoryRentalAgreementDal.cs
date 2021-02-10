@@ -16,6 +16,27 @@ namespace CarRental.DataAccess.Concrete.InMemory
             _rentalAgreements = new List<RentalAgreement>();
         }
 
+        #region Before Generic Repository Implementation
+        //public List<RentalAgreement> GetAll()
+        //{
+        //    return _rentalAgreements;
+        //}
+        //public List<RentalAgreement> GetAllByCustomer(int customerId)
+        //{
+        //    return _rentalAgreements.Where(a => a.CustomerId == customerId).ToList();
+        //}
+
+        //public List<RentalAgreement> GetAllByEmployee(int employeeId)
+        //{
+        //    return _rentalAgreements.Where(a => a.EmployeeId == employeeId).ToList();
+        //}
+
+        //public RentalAgreement GetById(int rentalAgreementId)
+        //{
+        //    return _rentalAgreements.SingleOrDefault(a => a.Id == rentalAgreementId);
+        //} 
+        #endregion
+
         public void Add(RentalAgreement rentalAgreement)
         {
             _rentalAgreements.Add(rentalAgreement);
@@ -29,32 +50,21 @@ namespace CarRental.DataAccess.Concrete.InMemory
 
         public RentalAgreement Get(Expression<Func<RentalAgreement, bool>> filter)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<RentalAgreement> GetAll()
-        {
-            return _rentalAgreements;
+            var query = filter.Compile();
+            return (RentalAgreement)_rentalAgreements.SingleOrDefault(query.Invoke);
         }
 
         public List<RentalAgreement> GetAll(Expression<Func<RentalAgreement, bool>> filter = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<RentalAgreement> GetAllByCustomer(int customerId)
-        {
-            return _rentalAgreements.Where(a => a.CustomerId == customerId).ToList();
-        }
-
-        public List<RentalAgreement> GetAllByEmployee(int employeeId)
-        {
-            return _rentalAgreements.Where(a => a.EmployeeId == employeeId).ToList();
-        }
-
-        public RentalAgreement GetById(int rentalAgreementId)
-        {
-            return _rentalAgreements.SingleOrDefault(a => a.Id == rentalAgreementId);
+            if (filter == null)
+            {
+                return _rentalAgreements;
+            }
+            else
+            {
+                var query = filter.Compile();
+                return _rentalAgreements.Where(query.Invoke).ToList();
+            }
         }
 
         public void Update(RentalAgreement rentalAgreement)
@@ -62,7 +72,6 @@ namespace CarRental.DataAccess.Concrete.InMemory
             var agreementToUpdate = _rentalAgreements.SingleOrDefault(a => a.Id == rentalAgreement.Id);
             agreementToUpdate.CustomerId = rentalAgreement.CustomerId;
             agreementToUpdate.EmployeeId = rentalAgreement.EmployeeId;
-            agreementToUpdate.CarId = rentalAgreement.CarId;
             agreementToUpdate.StartDate = rentalAgreement.StartDate;
             agreementToUpdate.EndDate = rentalAgreement.EndDate;
             agreementToUpdate.TotalPrice = rentalAgreement.TotalPrice;

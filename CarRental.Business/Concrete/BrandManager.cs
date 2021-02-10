@@ -38,5 +38,10 @@ namespace CarRental.Business.Concrete
         {
             _brandDal.Update(brand);
         }
+
+        public Brand GetByName(string brandName)
+        {
+            return _brandDal.Get(b => b.Name == brandName);
+        }
     }
 }

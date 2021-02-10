@@ -9,35 +9,40 @@ namespace CarRental.Business.Concrete
 {
     public class CarTypeManager : ICarTypeService
     {
-        private readonly ICarTypeDal _CarTypeDal;
-        public CarTypeManager(ICarTypeDal CarTypeDal)
+        private readonly ICarTypeDal _carTypeDal;
+        public CarTypeManager(ICarTypeDal carTypeDal)
         {
-            _CarTypeDal = CarTypeDal;
+            _carTypeDal = carTypeDal;
         }
 
-        public void Add(CarType CarType)
+        public void Add(CarType carType)
         {
-            _CarTypeDal.Add(CarType);
+            _carTypeDal.Add(carType);
         }
 
-        public void Delete(CarType CarType)
+        public void Delete(CarType carType)
         {
-            _CarTypeDal.Delete(CarType);
+            _carTypeDal.Delete(carType);
         }
 
-        public CarType GetById(int CarTypeId)
+        public CarType GetById(int carTypeId)
         {
-            return _CarTypeDal.Get(vt => vt.Id == CarTypeId);
+            return _carTypeDal.Get(vt => vt.Id == carTypeId);
         }
 
         public List<CarType> GetAll()
         {
-            return _CarTypeDal.GetAll();
+            return _carTypeDal.GetAll();
         }
 
-        public void Update(CarType CarType)
+        public void Update(CarType carType)
         {
-            _CarTypeDal.Update(CarType);
+            _carTypeDal.Update(carType);
+        }
+
+        public CarType GetByName(string carTypeName)
+        {
+            return _carTypeDal.Get(c => c.Name == carTypeName);
         }
     }
 }

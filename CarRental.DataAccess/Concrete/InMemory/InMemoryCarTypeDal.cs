@@ -11,10 +11,10 @@ namespace CarRental.DataAccess.Concrete.InMemory
 {
     public class InMemoryCarTypeDal : ICarTypeDal
     {
-        List<CarType> _CarTypes;
+        List<CarType> _carTypes;
         public InMemoryCarTypeDal()
         {
-            _CarTypes = new List<CarType>
+            _carTypes = new List<CarType>
             {
                 new CarType { Id = 1, Name= "Hatchback"},
                 new CarType { Id = 2, Name= "Sedan"},
@@ -26,41 +26,49 @@ namespace CarRental.DataAccess.Concrete.InMemory
                 new CarType { Id = 6, Name= "Mini Truck"},
             };
         }
-
+        #region Before Generic Repository implementation
+        //public List<CarType> GetAll()
+        //{
+        //    return _carTypes;
+        //}
+        //public CarType GetById(int CarTypeId)
+        //{
+        //    return _carTypes.SingleOrDefault(v => v.Id == CarTypeId);
+        //} 
+        #endregion
         public void Add(CarType CarType)
         {
-            _CarTypes.Add(CarType);
+            _carTypes.Add(CarType);
         }
 
         public void Delete(CarType CarType)
         {
-            var CarToDelete = _CarTypes.SingleOrDefault(v => v.Id == CarType.Id);
-            _CarTypes.Remove(CarToDelete);
+            var CarToDelete = _carTypes.SingleOrDefault(v => v.Id == CarType.Id);
+            _carTypes.Remove(CarToDelete);
         }
 
         public CarType Get(Expression<Func<CarType, bool>> filter)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<CarType> GetAll()
-        {
-            return _CarTypes;
+            var query = filter.Compile();
+            return (CarType)_carTypes.SingleOrDefault(query.Invoke);
         }
 
         public List<CarType> GetAll(Expression<Func<CarType, bool>> filter = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public CarType GetById(int CarTypeId)
-        {
-            return _CarTypes.SingleOrDefault(v => v.Id == CarTypeId);
+            if (filter == null)
+            {
+                return _carTypes;
+            }
+            else
+            {
+                var query = filter.Compile();
+                return _carTypes.Where(query.Invoke).ToList();
+            }
         }
 
         public void Update(CarType CarType)
         {
-            var CarToUpdate = _CarTypes.SingleOrDefault(v => v.Id == CarType.Id);
+            var CarToUpdate = _carTypes.SingleOrDefault(v => v.Id == CarType.Id);
             CarToUpdate.Name = CarType.Name;
         }
     }

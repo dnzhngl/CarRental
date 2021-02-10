@@ -1,5 +1,7 @@
-﻿using CarRental.DataAccess.Abstract;
+﻿using CarRental.Core.DataAccess.EntityFramework;
+using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
+using CarRental.Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,51 +11,56 @@ using System.Text;
 
 namespace CarRental.DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, CarRentalContext>, ICarDal
     {
-        public void Add(Car entity)
-        {
-            using(CarRentalContext context = new CarRentalContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
-            }
-        }
-
-        public void Delete(Car entity)
+        public CarDetailDto GetCarDetail(int carId)
         {
             using (CarRentalContext context = new CarRentalContext())
             {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
+                var result = from c in context.Cars
+                             join ct in context.CarTypes on c.CarTypeId equals ct.Id
+                             join b in context.Brands on c.BrandId equals b.Id
+                             join cl in context.Colors on c.ColorId equals cl.Id
+                             where c.Id == carId
+                             select new CarDetailDto
+                             {
+                                 Id = c.Id,
+                                 Brand = b.Name,
+                                 Color = cl.Name,
+                                 CarType = ct.Name,
+                                 Model = c.Model,
+                                 ModelYear = c.ModelYear,
+                                 Capacity = c.Capacity,
+                                 DailyPrice = c.DailyPrice,
+                                 QuantityInStock = c.QuantityInStock,
+                                 Description = c.Description
+                             };
+                return result.FirstOrDefault();
             }
         }
 
-        public Car Get(Expression<Func<Car, bool>> filter)
+        public List<CarDetailDto> GetCarsDetails()
         {
-            using(CarRentalContext context = new CarRentalContext())
+            using (CarRentalContext context = new CarRentalContext())
             {
-                return context.Set<Car>().SingleOrDefault(filter);
-            }
-        }
-
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            using(CarRentalContext context = new CarRentalContext())
-            {
-                return filter == null ? context.Set<Car>().ToList() : context.Set<Car>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Car entity)
-        {
-             using(CarRentalContext context = new CarRentalContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                var result = from c in context.Cars
+                             join ct in context.CarTypes on c.CarTypeId equals ct.Id
+                             join b in context.Brands on c.BrandId equals b.Id
+                             join cl in context.Colors on c.ColorId equals cl.Id
+                             select new CarDetailDto
+                             {
+                                 Id = c.Id,
+                                 Brand = b.Name,
+                                 Color = cl.Name,
+                                 CarType = ct.Name,
+                                 Model = c.Model,
+                                 ModelYear = c.ModelYear,
+                                 Capacity = c.Capacity,
+                                 DailyPrice = c.DailyPrice,
+                                 QuantityInStock = c.QuantityInStock,
+                                 Description = c.Description
+                             };
+                return result.ToList();
             }
         }
     }

@@ -9,6 +9,7 @@ namespace CarRental.Business.Abstract
     {
         List<Color> GetAll();
         Color GetById(int colorId);
+        Color GetByName(string colorName);
         void Add(Color color);
         void Delete(Color color);
         void Update(Color color);

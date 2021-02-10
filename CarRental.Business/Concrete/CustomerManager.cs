@@ -3,6 +3,7 @@ using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CarRental.Business.Concrete
@@ -14,27 +15,27 @@ namespace CarRental.Business.Concrete
         {
             _customerDal = customerDal;
         }
-        public void Add(IndividualCustomer customer)
+        public void Add(Customer customer)
         {
             _customerDal.Add(customer);
         }
 
-        public void Delete(IndividualCustomer customer)
+        public void Delete(Customer customer)
         {
             _customerDal.Delete(customer);
         }
 
-        public List<IndividualCustomer> GetAll()
+        public List<Customer> GetAll()
         {
-            return _customerDal.GetAll();
+            return _customerDal.GetAll().ToList();
         }
 
-        public IndividualCustomer GetById(int customerId)
+        public Customer GetById(int customerId)
         {
             return _customerDal.Get(c => c.Id == customerId);
         }
 
-        public void Update(IndividualCustomer customer)
+        public void Update(Customer customer)
         {
             _customerDal.Update(customer);
         }

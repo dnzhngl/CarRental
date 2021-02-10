@@ -8,9 +8,10 @@ namespace CarRental.Business.Abstract
     public interface ICarTypeService
     {
         List<CarType> GetAll();
-        CarType GetById(int CarTypeId);
-        void Add(CarType CarType);
-        void Delete(CarType CarType);
-        void Update(CarType CarType);
+        CarType GetById(int carTypeId);
+        CarType GetByName(string carTypeName);
+        void Add(CarType carType);
+        void Delete(CarType carType);
+        void Update(CarType carType);
     }
 }

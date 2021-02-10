@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CarRental.Entities.Abstract
+namespace CarRental.Core.Entities
 {
     public interface IEntity
     {

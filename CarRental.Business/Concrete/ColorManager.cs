@@ -34,6 +34,11 @@ namespace CarRental.Business.Concrete
             return _colorDal.Get(c => c.Id == colorId);
         }
 
+        public Color GetByName(string colorName)
+        {
+            return _colorDal.Get(c => c.Name == colorName);
+        }
+
         public void Update(Color color)
         {
             _colorDal.Update(color);

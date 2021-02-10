@@ -1,5 +1,4 @@
-﻿using CarRental.DataAccess.Abstract.EntityRepository;
-using CarRental.Entities.Abstract;
+﻿using CarRental.Core.DataAccess;
 using CarRental.Entities.Concrete;
 using System;
 using System.Collections.Generic;
