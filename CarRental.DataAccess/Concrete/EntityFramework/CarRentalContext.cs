@@ -11,7 +11,6 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=CarRental;Trusted_Connection=True;");
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=CarRental;Trusted_Connection=True;");
         }
 
         public DbSet<Brand> Brands { get; set; }
@@ -26,17 +25,19 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<User> Users { get; set; }
 
+        #region Many to Manyr Relationship with Cars and Rentals
         //public DbSet<RentedCar> RentedCars { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Car>()
-            .HasMany(c => c.Rentals)
-            .WithMany(r => r.Cars)
-            .UsingEntity<RentedCar>(
-                j => j.HasOne(cr => cr.Rental).WithMany(c => c.RentedCars),
-                j => j.HasOne(cr => cr.Car).WithMany(c => c.RentedCars));
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Car>()
+        //    .HasMany(c => c.Rentals)
+        //    .WithMany(r => r.Cars)
+        //    .UsingEntity<RentedCar>(
+        //        j => j.HasOne(cr => cr.Rental).WithMany(c => c.RentedCars),
+        //        j => j.HasOne(cr => cr.Car).WithMany(c => c.RentedCars));
 
-        }
+        //}
+        #endregion
     }
 }

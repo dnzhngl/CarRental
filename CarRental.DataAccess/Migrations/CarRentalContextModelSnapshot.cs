@@ -131,6 +131,9 @@ namespace CarRental.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -151,26 +154,13 @@ namespace CarRental.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CarId");
+
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Rentals");
-                });
-
-            modelBuilder.Entity("CarRental.Entities.Concrete.RentedCar", b =>
-                {
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RentalId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CarId", "RentalId");
-
-                    b.HasIndex("RentalId");
-
-                    b.ToTable("RentedCar");
                 });
 
             modelBuilder.Entity("CarRental.Entities.Concrete.User", b =>
@@ -305,6 +295,12 @@ namespace CarRental.DataAccess.Migrations
 
             modelBuilder.Entity("CarRental.Entities.Concrete.Rental", b =>
                 {
+                    b.HasOne("CarRental.Entities.Concrete.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarRental.Entities.Concrete.Customer", "Customer")
                         .WithMany("Rentals")
                         .HasForeignKey("CustomerId")
@@ -317,28 +313,11 @@ namespace CarRental.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Car");
+
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("CarRental.Entities.Concrete.RentedCar", b =>
-                {
-                    b.HasOne("CarRental.Entities.Concrete.Car", "Car")
-                        .WithMany("RentedCars")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarRental.Entities.Concrete.Rental", "Rental")
-                        .WithMany("RentedCars")
-                        .HasForeignKey("RentalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Rental");
                 });
 
             modelBuilder.Entity("CarRental.Entities.Concrete.Customer", b =>
@@ -385,19 +364,9 @@ namespace CarRental.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CarRental.Entities.Concrete.Car", b =>
-                {
-                    b.Navigation("RentedCars");
-                });
-
             modelBuilder.Entity("CarRental.Entities.Concrete.Department", b =>
                 {
                     b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("CarRental.Entities.Concrete.Rental", b =>
-                {
-                    b.Navigation("RentedCars");
                 });
 
             modelBuilder.Entity("CarRental.Entities.Concrete.Customer", b =>

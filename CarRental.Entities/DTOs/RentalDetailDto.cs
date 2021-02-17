@@ -23,7 +23,5 @@ namespace CarRental.Entities.DTOs
         public Nullable<DateTime> ReturnDate { get; set; }
         public Nullable<double> TotalPrice { get; set; }
         public Nullable<float> Discount { get; set; }
-
-        public virtual ICollection<Concrete.RentedCar> RentalCars { get; set; }
     }
 }

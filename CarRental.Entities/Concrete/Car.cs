@@ -24,7 +24,7 @@ namespace CarRental.Entities.Concrete
         public int ColorId { get; set; }
         public Color Color { get; set; }
 
-        public List<Rental> Rentals { get; set; }
-        public ICollection<RentedCar> RentedCars { get; set; }
+        //public ICollection<Rental> Rentals { get; set; }
+        //public ICollection<RentedCar> RentedCars { get; set; }
     }
 }

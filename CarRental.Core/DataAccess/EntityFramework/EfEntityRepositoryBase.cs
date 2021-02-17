@@ -22,15 +22,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                 context.SaveChanges();
             }
         }
-        public void AddWithChild(TEntity entity)
-        {
-            using (TContext context = new TContext())
-            {
-                context.Add(entity);
-                context.SaveChanges();
-            }
-        }
-
         public bool Any(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
@@ -47,7 +38,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                     : context.Set<TEntity>().Count(filter);
             }
         }
-
         public void Delete(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -57,7 +47,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                 context.SaveChanges();
             }
         }
-
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
@@ -65,7 +54,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                 return context.Set<TEntity>().SingleOrDefault(filter);
             }
         }
-
         public TEntity Get(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes)
         {
             using (TContext context = new TContext())
@@ -81,7 +69,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                 return query.SingleOrDefault();
             }
         }
-
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using (TContext context = new TContext())
@@ -91,7 +78,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                     : context.Set<TEntity>().Where(filter).ToList();
             }
         }
-
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
         {
             using (TContext context = new TContext())
@@ -111,7 +97,6 @@ namespace CarRental.Core.DataAccess.EntityFramework
                 return query.ToList();
             }
         }
-
         public void Update(TEntity entity)
         {
             using (TContext context = new TContext())

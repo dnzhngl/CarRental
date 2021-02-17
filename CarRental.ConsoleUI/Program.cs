@@ -24,49 +24,12 @@ namespace CarRental.ConsoleUI
             IndividualCustomerManager individualCustomerManager = new IndividualCustomerManager(new EfIndividualCustomerDal());
             EmployeeManager employeeManager = new EmployeeManager(new EfEmployeeDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            RentalCarManager rentalCarManager = new RentalCarManager(new EfRentalCarDal());
-
-            CarRentalContext contex = new CarRentalContext();
-            //contex.Database.EnsureCreated();
 
 
             //AddDefaultData(carManager, brandManager, colorManager, carTypeManager, departmentManager);
             //AddEmployee(employeeManager);
             //AddIndividualCustomer(individualCustomerManager);
 
-            var car1 = carManager.GetById(1).Data;
-
-            var rental = new Rental
-            {
-                EmployeeId = 1,
-                CustomerId = 2,
-                TotalPrice = 150,
-                RentDate = DateTime.Now,
-                //Cars = new List<Car> { car1 }
-                RentedCars = new List<RentedCar> { new RentedCar { Car = car1 } }
-            };
-
-            //contex.Add(rental);
-            //contex.SaveChanges();
-
-         //   rentalManager.Add(rental);
-         //   rentalManager.AddWithChild(rental);
-
-            //var rentalList = rentalManager.GetAll();
-
-
-
-            //var rentals = rentalManager.GetAll().Data.Where(r => r.Cars.Any(c => c.Id == 1));
-            //foreach (var item in rentals)
-            //{
-            //    Console.WriteLine(item.TotalPrice);
-            //}
-
-            //var rentals2 = rentalManager.GetAll().Data.Where(r => r.RentedCars.Any(c => c.ReturnDate == null));
-            //foreach (var item in rentals)
-            //{
-            //    Console.WriteLine(item.TotalPrice);
-            //}
         }
 
 
@@ -147,8 +110,7 @@ namespace CarRental.ConsoleUI
                 {
                     CustomerId = 2,
                     EmployeeId = 1,
-                    Cars = new List<Car> { car1 },
-                    //RentDate = DateTime.Now,
+                    RentDate = DateTime.Now,
                     TotalPrice = 100,
                     Discount = 0
                 },
@@ -156,8 +118,7 @@ namespace CarRental.ConsoleUI
                 {
                     CustomerId = 2,
                     EmployeeId = 1,
-                    Cars = new List<Car> { car1, car2 },
-                    //RentDate = DateTime.Now,
+                    RentDate = DateTime.Now,
                 });
             context.SaveChanges();
         }
@@ -175,8 +136,10 @@ namespace CarRental.ConsoleUI
             {
                 CustomerId = 2,
                 EmployeeId = 1,
-                //RentDate = DateTime.Now,
-                Cars = carList
+                CarId = 1,
+                RentDate = DateTime.Now,
+                TotalPrice = 150,
+                Discount = 0
             };
             var result = rentalManager.Add(agreement);
             Console.WriteLine(result.Message);

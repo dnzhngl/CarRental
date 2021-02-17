@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarRental.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initializer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -212,6 +212,7 @@ namespace CarRental.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: false),
                     RentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TotalPrice = table.Column<double>(type: "float", nullable: true),
@@ -220,6 +221,12 @@ namespace CarRental.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rentals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rentals_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Rentals_Customers_CustomerId",
                         column: x => x.CustomerId,
@@ -230,30 +237,6 @@ namespace CarRental.DataAccess.Migrations
                         name: "FK_Rentals_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RentedCar",
-                columns: table => new
-                {
-                    CarId = table.Column<int>(type: "int", nullable: false),
-                    RentalId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RentedCar", x => new { x.CarId, x.RentalId });
-                    table.ForeignKey(
-                        name: "FK_RentedCar_Cars_CarId",
-                        column: x => x.CarId,
-                        principalTable: "Cars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RentedCar_Rentals_RentalId",
-                        column: x => x.RentalId,
-                        principalTable: "Rentals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -279,6 +262,11 @@ namespace CarRental.DataAccess.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rentals_CarId",
+                table: "Rentals",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rentals_CustomerId",
                 table: "Rentals",
                 column: "CustomerId");
@@ -287,11 +275,6 @@ namespace CarRental.DataAccess.Migrations
                 name: "IX_Rentals_EmployeeId",
                 table: "Rentals",
                 column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RentedCar_RentalId",
-                table: "RentedCar",
-                column: "RentalId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -303,13 +286,16 @@ namespace CarRental.DataAccess.Migrations
                 name: "IndividualCustomers");
 
             migrationBuilder.DropTable(
-                name: "RentedCar");
+                name: "Rentals");
 
             migrationBuilder.DropTable(
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Rentals");
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Brands");
@@ -319,12 +305,6 @@ namespace CarRental.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Colors");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Departments");

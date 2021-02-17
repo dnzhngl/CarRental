@@ -12,14 +12,18 @@ namespace CarRental.Entities.Concrete
         public virtual Customer Customer { get; set; }
         public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
+        public int CarId { get; set; }
+        public Car Car { get; set; }
 
         public DateTime RentDate { get; set; }
         public Nullable<DateTime> ReturnDate { get; set; }
         public Nullable<double> TotalPrice { get; set; }
         public Nullable<float> Discount { get; set; }
 
-        public List<Car> Cars { get; set; }
-        public ICollection<RentedCar> RentedCars { get; set; }
+
+
+        //public ICollection<Car> Cars { get; set; }
+        //public ICollection<RentedCar> RentedCars { get; set; }
 
     }
 }

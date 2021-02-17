@@ -18,21 +18,13 @@ namespace CarRental.Business.Concrete
         }
         public IResult Add(Rental rental)
         {
-            //try
-            //{
+            var result = _rentalDal.Any(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            if (!result)
+            {
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.Rental.Add());
-            //}
-            //catch
-            //{
-            //    return new ErrorResult(Messages.Error());
-            //}
-        }
-
-        public IResult AddWithChild(Rental rental)
-        {
-            _rentalDal.AddWithChild(rental);
-            return new SuccessResult(Messages.Rental.Add());
+            }
+            return new ErrorResult(Messages.Error());
         }
 
         public IResult Delete(Rental rental)
@@ -62,16 +54,6 @@ namespace CarRental.Business.Concrete
             if (result != null)
             {
                 return new SuccessDataResult<Rental>(result);
-            }
-            return new ErrorDataResult<Rental>(Messages.NotFound());
-        }
-
-        public IDataResult<Rental> GetByIdInclude(int rentalId)
-        {
-            var result = _rentalDal.Any(a => a.Id == rentalId);
-            if (result)
-            {
-                return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId, r => r.Cars));
             }
             return new ErrorDataResult<Rental>(Messages.NotFound());
         }
