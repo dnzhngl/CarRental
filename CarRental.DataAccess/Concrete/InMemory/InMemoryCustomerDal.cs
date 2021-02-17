@@ -8,15 +8,15 @@ using System.Text;
 
 namespace CarRental.DataAccess.Concrete.InMemory
 {
-    public class InMemoryCustomerDal : ICustomerDal
+    public class InMemoryCustomerDal /*: ICustomerDal*/
     {
         List<Customer> _customers;
         public InMemoryCustomerDal()
         {
             _customers = new List<Customer>
             {
-                new IndividualCustomer { Id=1, FirstName="Sevim", LastName="Sevimli", IdentityNo="12345678910" ,Email="sevimSevimli@hotmail.com", PasswordHash="sevimli", PhoneNumber="0555 555 55 55", JoinDate= new DateTime(01/01/2020)},
-                new IndividualCustomer { Id=2, FirstName="Ateş", LastName="Soba", IdentityNo="12345678911" ,Email="atesSoba@hotmail.com", PasswordHash="atesS", PhoneNumber="0555 555 55 54", JoinDate= new DateTime(07/12/2020)}
+            //    new IndividualCustomer { Id=1, FirstName="Sevim", LastName="Sevimli", IdentityNo="12345678910" ,Email="sevimSevimli@hotmail.com", PasswordHash="sevimli", PhoneNumber="0555 555 55 55", JoinDate= new DateTime(01/01/2020)},
+            //    new IndividualCustomer { Id=2, FirstName="Ateş", LastName="Soba", IdentityNo="12345678911" ,Email="atesSoba@hotmail.com", PasswordHash="atesS", PhoneNumber="0555 555 55 54", JoinDate= new DateTime(07/12/2020)}
             };
         }
 

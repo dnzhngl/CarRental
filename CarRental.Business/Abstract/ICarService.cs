@@ -1,5 +1,6 @@
 ﻿using CarRental.Entities.Concrete;
 using CarRental.Entities.DTOs;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,15 +9,16 @@ namespace CarRental.Business.Abstract
 {
     public interface ICarService
     {
-        List<Car> GetAll();
-        Car GetById(int CarId);
-        string Add(Car Car);
-        void Delete(Car Car);
-        void Update(Car Car);
-        List<Car> GetAllByCarTypeId(int CarTypeId);
-        List<Car> GetAllByBrandId(int brandId);
-        List<Car> GetAllByColorId(int colorId);
-        List<CarDetailDto> GetAllCarsDetails();
-        CarDetailDto GetCarDetail(int carId);
+        IDataResult<List<Car>> GetAll();
+        IDataResult<Car> GetById(int carId);
+        IResult Add(Car car);
+        IResult Delete(Car car);
+        IResult Update(Car car);
+        IDataResult<List<Car>> GetAllByCarTypeId(int carTypeId);
+        IDataResult<List<Car>> GetAllByBrandId(int brandId);
+        IDataResult<List<Car>> GetAllByColorId(int colorId);
+        IDataResult<List<CarDetailDto>> GetAllCarsDetails();
+        IDataResult<CarDetailDto> GetCarDetail(int carId);
+        IDataResult<List<CarDetailDto>> GetAllCarsDetailByBrandId(int brandId);
     }
 }

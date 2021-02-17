@@ -1,6 +1,8 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.Constants;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,34 +16,67 @@ namespace CarRental.Business.Concrete
         {
             _colorDal = colorDal;
         }
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
-            _colorDal.Add(color);
+            var result = _colorDal.Any(c => c.Name == color.Name);
+            if (!result)
+            {
+                _colorDal.Add(color);
+                return new SuccessResult(Messages.Color.Add(color.Name));
+            }
+            return new ErrorResult(Messages.Color.Exists(color.Name));
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
-            _colorDal.Delete(color);
+            var result = _colorDal.Get(c => c.Id == color.Id);
+            if (result != null)
+            {
+                _colorDal.Delete(color);
+                return new SuccessResult(Messages.Color.Delete(color.Name));
+            }
+            return new ErrorResult(Messages.NotFound());
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            var result = _colorDal.Count();
+            if (result > 0)
+            {
+                return new SuccessDataResult<List<Color>>( _colorDal.GetAll());
+            }
+            return new ErrorDataResult<List<Color>>(Messages.NotFound());
         }
 
-        public Color GetById(int colorId)
+        public IDataResult<Color> GetById(int colorId)
         {
-            return _colorDal.Get(c => c.Id == colorId);
+            var result = _colorDal.Any(c => c.Id == colorId);
+            if (result)
+            {
+                return new SuccessDataResult<Color>( _colorDal.Get(c => c.Id == colorId));
+            }
+            return new ErrorDataResult<Color>(Messages.NotFound());
         }
 
-        public Color GetByName(string colorName)
+        public IDataResult<Color> GetByName(string colorName)
         {
-            return _colorDal.Get(c => c.Name == colorName);
+            var result = _colorDal.Any(c => c.Name == colorName);
+            if (result)
+            {
+                return new SuccessDataResult<Color>(_colorDal.Get(c => c.Name == colorName));
+            }
+            return new ErrorDataResult<Color>(Messages.NotFound());
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
-            _colorDal.Update(color);
+            var result = _colorDal.Get(c => c.Id == color.Id);
+            if (result != null)
+            {
+                _colorDal.Update(color);
+                return new SuccessResult(Messages.Color.Update(color.Name));
+            }
+            return new ErrorResult(Messages.NotFound());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
             using (CarRentalContext context = new CarRentalContext())
             {
                 var result = from e in context.Employees
-                             join d in context.Departments on e.DepartmantId equals d.Id
+                             join d in context.Departments on e.DepartmentId equals d.Id
                              join u in context.Users on e.Id equals u.Id
                              where e.Id == employeeId
                              select new EmployeeDetailDto
@@ -31,8 +31,8 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                                  Email = u.Email,
                                  PasswordHash = u.PasswordHash,
                                  Department = d.Name,
+                                 Position = e.Position,
                                  JoinDate = u.JoinDate,
-                                 Position = e.Position
                              };
                 return result.FirstOrDefault();
             }

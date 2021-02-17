@@ -1,4 +1,5 @@
 ﻿using CarRental.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,10 +8,10 @@ namespace CarRental.Business.Abstract
 {
     public interface ICustomerService
     {
-        List<Customer> GetAll();
-        Customer GetById(int customerId);
-        void Add(Customer customer);
-        void Delete(Customer customer);
-        void Update(Customer customer);
+        IDataResult<List<Customer>> GetAll();
+        IDataResult<Customer> GetById(int userId);
+        IResult Add(Customer customer);
+        IResult Delete(Customer customer);
+        IResult Update(Customer customer);
     }
 }

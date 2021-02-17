@@ -1,6 +1,8 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.Constants;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,34 +17,67 @@ namespace CarRental.Business.Concrete
             _carTypeDal = carTypeDal;
         }
 
-        public void Add(CarType carType)
+        public IResult Add(CarType carType)
         {
-            _carTypeDal.Add(carType);
+            var result = _carTypeDal.Any(c => c.Name == carType.Name);
+            if (!result)
+            {
+                _carTypeDal.Add(carType);
+                return new SuccessResult(Messages.CarType.Add(carType.Name));
+            }
+            return new ErrorResult(Messages.CarType.Exists(carType.Name));
         }
 
-        public void Delete(CarType carType)
+        public IResult Delete(CarType carType)
         {
-            _carTypeDal.Delete(carType);
+            var result = _carTypeDal.Any(c => c.Id == carType.Id);
+            if (result)
+            {
+                _carTypeDal.Delete(carType);
+                return new SuccessResult(Messages.CarType.Delete(carType.Name));
+            }
+            return new ErrorResult(Messages.Error());
         }
 
-        public CarType GetById(int carTypeId)
+        public IDataResult<CarType> GetById(int carTypeId)
         {
-            return _carTypeDal.Get(vt => vt.Id == carTypeId);
+            var result = _carTypeDal.Any(c => c.Id == carTypeId);
+            if (result)
+            {
+                return new SuccessDataResult<CarType>(_carTypeDal.Get(vt => vt.Id == carTypeId));
+            }
+            return new ErrorDataResult<CarType>(Messages.NotFound());
         }
 
-        public List<CarType> GetAll()
+        public IDataResult<List<CarType>> GetAll()
         {
-            return _carTypeDal.GetAll();
+            var result = _carTypeDal.Count();
+            if (result > 0)
+            {
+                return new SuccessDataResult<List<CarType>>(_carTypeDal.GetAll());
+            }
+            return new ErrorDataResult<List<CarType>>(Messages.NotFound());
         }
 
-        public void Update(CarType carType)
+        public IResult Update(CarType carType)
         {
-            _carTypeDal.Update(carType);
+            var result = _carTypeDal.Any(c => c.Name == carType.Name);
+            if (result)
+            {
+                _carTypeDal.Update(carType);
+                return new SuccessResult(Messages.CarType.Update(carType.Name));
+            }
+            return new ErrorResult(Messages.Error());
         }
 
-        public CarType GetByName(string carTypeName)
+        public IDataResult<CarType> GetByName(string carTypeName)
         {
-            return _carTypeDal.Get(c => c.Name == carTypeName);
+            var result = _carTypeDal.Any(c => c.Name == carTypeName);
+            if (result)
+            {
+                return new SuccessDataResult<CarType>(_carTypeDal.Get(vt => vt.Name == carTypeName));
+            }
+            return new ErrorDataResult<CarType>(Messages.NotFound());
         }
     }
 }

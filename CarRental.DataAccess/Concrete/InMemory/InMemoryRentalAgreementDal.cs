@@ -8,74 +8,74 @@ using System.Text;
 
 namespace CarRental.DataAccess.Concrete.InMemory
 {
-    public class InMemoryRentalAgreementDal : IRentalAgreementDal
+    public class InMemoryRentalDal /*: IRentalDal*/
     {
-        List<RentalAgreement> _rentalAgreements;
-        public InMemoryRentalAgreementDal()
+        List<Rental> _rentals;
+        public InMemoryRentalDal()
         {
-            _rentalAgreements = new List<RentalAgreement>();
+            _rentals = new List<Rental>();
         }
 
         #region Before Generic Repository Implementation
-        //public List<RentalAgreement> GetAll()
+        //public List<Rental> GetAll()
         //{
-        //    return _rentalAgreements;
+        //    return _rentals;
         //}
-        //public List<RentalAgreement> GetAllByCustomer(int customerId)
+        //public List<Rental> GetAllByCustomer(int customerId)
         //{
-        //    return _rentalAgreements.Where(a => a.CustomerId == customerId).ToList();
-        //}
-
-        //public List<RentalAgreement> GetAllByEmployee(int employeeId)
-        //{
-        //    return _rentalAgreements.Where(a => a.EmployeeId == employeeId).ToList();
+        //    return _rentals.Where(a => a.CustomerId == customerId).ToList();
         //}
 
-        //public RentalAgreement GetById(int rentalAgreementId)
+        //public List<Rental> GetAllByEmployee(int employeeId)
         //{
-        //    return _rentalAgreements.SingleOrDefault(a => a.Id == rentalAgreementId);
+        //    return _rentals.Where(a => a.EmployeeId == employeeId).ToList();
+        //}
+
+        //public Rental GetById(int RentalId)
+        //{
+        //    return _rentals.SingleOrDefault(a => a.Id == RentalId);
         //} 
         #endregion
 
-        public void Add(RentalAgreement rentalAgreement)
+        public void Add(Rental Rental)
         {
-            _rentalAgreements.Add(rentalAgreement);
+            _rentals.Add(Rental);
         }
 
-        public void Delete(RentalAgreement rentalAgreement)
+        public void Delete(Rental Rental)
         {
-            var agreementToDelete = _rentalAgreements.SingleOrDefault(a => a.Id == rentalAgreement.Id);
-            _rentalAgreements.Remove(agreementToDelete);
+            var agreementToDelete = _rentals.SingleOrDefault(a => a.Id == Rental.Id);
+            _rentals.Remove(agreementToDelete);
         }
 
-        public RentalAgreement Get(Expression<Func<RentalAgreement, bool>> filter)
+        public Rental Get(Expression<Func<Rental, bool>> filter)
         {
             var query = filter.Compile();
-            return (RentalAgreement)_rentalAgreements.SingleOrDefault(query.Invoke);
+            return (Rental)_rentals.SingleOrDefault(query.Invoke);
         }
 
-        public List<RentalAgreement> GetAll(Expression<Func<RentalAgreement, bool>> filter = null)
+        public List<Rental> GetAll(Expression<Func<Rental, bool>> filter = null)
         {
             if (filter == null)
             {
-                return _rentalAgreements;
+                return _rentals;
             }
             else
             {
                 var query = filter.Compile();
-                return _rentalAgreements.Where(query.Invoke).ToList();
+                return _rentals.Where(query.Invoke).ToList();
             }
         }
 
-        public void Update(RentalAgreement rentalAgreement)
+        public void Update(Rental Rental)
         {
-            var agreementToUpdate = _rentalAgreements.SingleOrDefault(a => a.Id == rentalAgreement.Id);
-            agreementToUpdate.CustomerId = rentalAgreement.CustomerId;
-            agreementToUpdate.EmployeeId = rentalAgreement.EmployeeId;
-            agreementToUpdate.StartDate = rentalAgreement.StartDate;
-            agreementToUpdate.EndDate = rentalAgreement.EndDate;
-            agreementToUpdate.TotalPrice = rentalAgreement.TotalPrice;
-            agreementToUpdate.Discount = rentalAgreement.Discount;
+            var agreementToUpdate = _rentals.SingleOrDefault(a => a.Id == Rental.Id);
+            agreementToUpdate.CustomerId = Rental.CustomerId;
+            agreementToUpdate.EmployeeId = Rental.EmployeeId;
+            //agreementToUpdate.RentDate = Rental.RentDate;
+            //agreementToUpdate.ReturnDate = Rental.ReturnDate;
+            agreementToUpdate.TotalPrice = Rental.TotalPrice;
+            agreementToUpdate.Discount = Rental.Discount;
         }
     }
 }

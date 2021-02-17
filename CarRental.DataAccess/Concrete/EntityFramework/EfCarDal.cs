@@ -32,13 +32,11 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                                  ModelYear = c.ModelYear,
                                  Capacity = c.Capacity,
                                  DailyPrice = c.DailyPrice,
-                                 QuantityInStock = c.QuantityInStock,
                                  Description = c.Description
                              };
                 return result.FirstOrDefault();
             }
         }
-
         public List<CarDetailDto> GetCarsDetails()
         {
             using (CarRentalContext context = new CarRentalContext())
@@ -57,11 +55,35 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                                  ModelYear = c.ModelYear,
                                  Capacity = c.Capacity,
                                  DailyPrice = c.DailyPrice,
-                                 QuantityInStock = c.QuantityInStock,
                                  Description = c.Description
                              };
                 return result.ToList();
             }
         }
+        public List<CarDetailDto> GetAllCarsDetailByBrandId(int brandId)
+        {
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                var result = from c in context.Cars
+                             join ct in context.CarTypes on c.CarTypeId equals ct.Id
+                             join b in context.Brands on c.BrandId equals b.Id
+                             join cl in context.Colors on c.ColorId equals cl.Id
+                             where c.BrandId == brandId
+                             select new CarDetailDto
+                             {
+                                 Id = c.Id,
+                                 Brand = b.Name,
+                                 Color = cl.Name,
+                                 CarType = ct.Name,
+                                 Model = c.Model,
+                                 ModelYear = c.ModelYear,
+                                 Capacity = c.Capacity,
+                                 DailyPrice = c.DailyPrice,
+                                 Description = c.Description
+                             };
+                return result.ToList();
+            }
+        }
+
     }
 }

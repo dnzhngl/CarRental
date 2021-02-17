@@ -1,7 +1,9 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.Constants;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using CarRental.Entities.DTOs;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,34 +18,67 @@ namespace CarRental.Business.Concrete
             _employeeDal = employeeDal;
         }
 
-        public void Add(Employee employee)
+        public IResult Add(Employee employee)
         {
-            _employeeDal.Add(employee);
+            var result = _employeeDal.Any(e => e.IdentityNo == employee.IdentityNo);
+            if (!result)
+            {
+                _employeeDal.Add(employee);
+                return new SuccessResult(Messages.Employee.Add(employee.FirstName, employee.LastName));
+            }
+            return new ErrorResult(Messages.Employee.Exists(employee.FirstName, employee.LastName, employee.IdentityNo));
         }
 
-        public void Delete(Employee employee)
+        public IResult Delete(Employee employee)
         {
-            _employeeDal.Delete(employee);
+            var result = _employeeDal.Any(e => e.IdentityNo == employee.IdentityNo);
+            if (result)
+            {
+                _employeeDal.Delete(employee);
+                return new SuccessResult(Messages.Employee.Delete(employee.FirstName, employee.LastName));
+            }
+            return new ErrorResult(Messages.NotFound());
         }
 
-        public List<Employee> GetAll()
+        public IDataResult<List<Employee>> GetAll()
         {
-            return _employeeDal.GetAll();
+            var result = _employeeDal.Count();
+            if (result > 0)
+            {
+                return new SuccessDataResult<List<Employee>>(_employeeDal.GetAll());
+            }
+            return new ErrorDataResult<List<Employee>>(Messages.NotFound());
         }
 
-        public Employee GetById(int employeeId)
+        public IDataResult<Employee> GetById(int employeeId)
         {
-            return _employeeDal.Get(e => e.Id == employeeId);
+            var result = _employeeDal.Get(e => e.Id == employeeId);
+            if (result != null)
+            {
+                return new SuccessDataResult<Employee>(_employeeDal.Get(e => e.Id == employeeId));
+            }
+            return new ErrorDataResult<Employee>(Messages.NotFound());
         }
 
-        public EmployeeDetailDto GetEmployeeDetail(int employeeId)
+        public IDataResult<EmployeeDetailDto> GetEmployeeDetail(int employeeId)
         {
-            return _employeeDal.GetEmployeeDetail(employeeId);
+            var result = _employeeDal.Any(e => e.Id == employeeId);
+            if (result)
+            {
+                return new SuccessDataResult<EmployeeDetailDto>(_employeeDal.GetEmployeeDetail(employeeId));
+            }
+            return new ErrorDataResult<EmployeeDetailDto>(Messages.NotFound());
         }
 
-        public void Update(Employee employee)
+        public IResult Update(Employee employee)
         {
-            _employeeDal.Update(employee);
+            var result = _employeeDal.Any(e => e.IdentityNo == employee.IdentityNo);
+            if (result)
+            {
+                _employeeDal.Update(employee);
+                return new SuccessResult(Messages.Employee.Update(employee.FirstName, employee.LastName));
+            }
+            return new ErrorResult(Messages.NotFound());
         }
     }
 }

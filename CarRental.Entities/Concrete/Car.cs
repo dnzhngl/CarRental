@@ -13,14 +13,18 @@ namespace CarRental.Entities.Concrete
         public string ModelYear { get; set; }
         public double DailyPrice { get; set; }
         public string Description { get; set; }
-        public int QuantityInStock { get; set; }
+        public bool? IsAvailable { get; set; } = true;
 
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
+
         public int CarTypeId { get; set; }
         public CarType CarType { get; set; }
+
         public int ColorId { get; set; }
         public Color Color { get; set; }
-        //public virtual ICollection<RentalAgreement_Car> RentalAgreements_Car { get; set; }
+
+        public List<Rental> Rentals { get; set; }
+        public ICollection<RentedCar> RentedCars { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace CarRental.DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarTypeDal : ICarTypeDal
+    public class InMemoryCarTypeDal /*: ICarTypeDal*/
     {
         List<CarType> _carTypes;
         public InMemoryCarTypeDal()

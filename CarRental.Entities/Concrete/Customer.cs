@@ -1,10 +1,12 @@
 ﻿using CarRental.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CarRental.Entities.Concrete
 {
+    [Table("Customers")]
     public class Customer : User, IEntity
     {
         #region Before User base class implementation
@@ -16,6 +18,6 @@ namespace CarRental.Entities.Concrete
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
-        public virtual ICollection<RentalAgreement> RentalAgreements { get; set; }
+        public virtual ICollection<Rental> Rentals { get; set; }
     }
 }

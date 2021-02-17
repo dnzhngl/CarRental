@@ -11,7 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Business", "CarRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.ConsoleUI", "CarRental.ConsoleUI\CarRental.ConsoleUI.csproj", "{3503F3B7-332E-404A-B703-F8AEA6A3A28D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.Core", "CarRental.Core\CarRental.Core.csproj", "{6BC9BE4E-9B5B-4D9B-92F9-7367C2714799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Core", "CarRental.Core\CarRental.Core.csproj", "{6BC9BE4E-9B5B-4D9B-92F9-7367C2714799}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SeedData", "SeedData", "{62123176-8ED1-4036-BF04-A436CA7D4CEB}"
+	ProjectSection(SolutionItems) = preProject
+		SeedData.txt = SeedData.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.WebApi", "CarRental.WebApi\CarRental.WebApi.csproj", "{A596D93E-71C7-4E57-B63F-B09E04914CB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,10 @@ Global
 		{6BC9BE4E-9B5B-4D9B-92F9-7367C2714799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BC9BE4E-9B5B-4D9B-92F9-7367C2714799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BC9BE4E-9B5B-4D9B-92F9-7367C2714799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A596D93E-71C7-4E57-B63F-B09E04914CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A596D93E-71C7-4E57-B63F-B09E04914CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A596D93E-71C7-4E57-B63F-B09E04914CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A596D93E-71C7-4E57-B63F-B09E04914CB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

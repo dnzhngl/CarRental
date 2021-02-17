@@ -15,11 +15,36 @@ namespace CarRental.Core.DataAccess.EntityFramework
     {
         public void Add(TEntity entity)
         {
-            using (TContext context = new TContext()) 
+            using (TContext context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
                 context.SaveChanges();
+            }
+        }
+        public void AddWithChild(TEntity entity)
+        {
+            using (TContext context = new TContext())
+            {
+                context.Add(entity);
+                context.SaveChanges();
+            }
+        }
+
+        public bool Any(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().Any(filter);
+            }
+        }
+        public int Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            using (TContext context = new TContext())
+            {
+                return filter == null
+                    ? context.Set<TEntity>().Count()
+                    : context.Set<TEntity>().Count(filter);
             }
         }
 
@@ -37,7 +62,23 @@ namespace CarRental.Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                return context.Set<TEntity>().SingleOrDefault(filter); 
+                return context.Set<TEntity>().SingleOrDefault(filter);
+            }
+        }
+
+        public TEntity Get(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes)
+        {
+            using (TContext context = new TContext())
+            {
+                IQueryable<TEntity> query = (IQueryable<TEntity>)context.Set<TEntity>().SingleOrDefault(filter);
+                if (includes.Any())
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+                return query.SingleOrDefault();
             }
         }
 
@@ -48,6 +89,26 @@ namespace CarRental.Core.DataAccess.EntityFramework
                 return filter == null
                     ? context.Set<TEntity>().ToList()
                     : context.Set<TEntity>().Where(filter).ToList();
+            }
+        }
+
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
+        {
+            using (TContext context = new TContext())
+            {
+                IQueryable<TEntity> query = context.Set<TEntity>();
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+                if (includes.Any())
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+                return query.ToList();
             }
         }
 

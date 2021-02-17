@@ -1,0 +1,32 @@
+﻿           
+Migration Seed Data
+           
+           migrationBuilder.Sql("Insert Into [CarRental].dbo.Colors (Name) Values ('Siyah')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Colors (Name) Values ('Beyaz')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Colors (Name) Values ('Gri')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Colors (Name) Values ('Kırmızı')");
+
+
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.CarTypes (Name) Values ('Sedan')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.CarTypes (Name) Values ('Hatchback')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.CarTypes (Name) Values ('Pickup')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.CarTypes (Name) Values ('SUV')");
+
+
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Brands (Name) Values ('Ford')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Brands (Name) Values ('Volkwagen')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Brands (Name) Values ('Audi')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Brands (Name) Values ('Toyota')");
+
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Departments (Name) Values ('Pazarlama')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Departments (Name) Values ('Satın alma')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Departments (Name) Values ('Mali ve idari İşler')");
+
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Users (Email, Password, JoinDate) Values ('admin@carRental.com','adminuser',GETDATE())");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Employees (Id, IdentityNo, FirstName, LastName, Gender, DOB, PhoneNumber, Address, Position, DepartmentId) Values (1,'12345678910','admin','user','F','10.10.1990','05556667788','İzmir','Yönetici',1");
+
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Users (Email, Password, JoinDate) Values ('deneme@user.com','denemeuser',GETDATE())");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Customers (Id, PhoneNumber, Address) Values (2,'05553332211','İzmir')");
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.IndividualCustomers (Id, IdentityNo, FirstName, LastName, DOB) Values (2,'12345678911','deneme','user','01.01.1989'");
+
+            migrationBuilder.Sql("Insert Into [CarRental].dbo.Rentals (CustomerId, EmployeeId, RentDate, ReturnDate, TotalPrice, Discount) Values (2,1,GETDATE(), null, null, null)");

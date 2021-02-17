@@ -11,6 +11,7 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=CarRental;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=CarRental;Trusted_Connection=True;");
         }
 
         public DbSet<Brand> Brands { get; set; }
@@ -22,9 +23,20 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
         public DbSet<IndividualCustomer> IndividualCustomers { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<RentalAgreement> RentalAgreements { get; set; }
-        //public DbSet<RentalAgreement_Car> RentalAgreements_Cars { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
         public DbSet<User> Users { get; set; }
 
+        //public DbSet<RentedCar> RentedCars { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Car>()
+            .HasMany(c => c.Rentals)
+            .WithMany(r => r.Cars)
+            .UsingEntity<RentedCar>(
+                j => j.HasOne(cr => cr.Rental).WithMany(c => c.RentedCars),
+                j => j.HasOne(cr => cr.Car).WithMany(c => c.RentedCars));
+
+        }
     }
 }

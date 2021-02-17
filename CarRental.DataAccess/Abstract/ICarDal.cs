@@ -11,5 +11,6 @@ namespace CarRental.DataAccess.Abstract
     {
         List<CarDetailDto> GetCarsDetails();
         CarDetailDto GetCarDetail(int carId);
+        List<CarDetailDto> GetAllCarsDetailByBrandId(int brandId);
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CarRental.DataAccess.Concrete.InMemory
 {
-    public class InMemoryBrandDal : IBrandDal
+    public class InMemoryBrandDal /*: IBrandDal*/
     {
         List<Brand> _brands;
         public InMemoryBrandDal()

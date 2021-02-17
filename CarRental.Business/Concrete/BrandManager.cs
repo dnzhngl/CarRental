@@ -1,6 +1,8 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.Constants;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,34 +16,63 @@ namespace CarRental.Business.Concrete
         {
             _brandDal = brandDal;
         }
-        public void Add(Brand brand)
+
+        public IResult Add(Brand brand)
         {
-            _brandDal.Add(brand);
+            var result = _brandDal.Any(b => b.Name == brand.Name);
+            if (!result)
+            {
+                _brandDal.Add(brand);
+                return new SuccessResult(Messages.Brand.Add(brand.Name));
+            }
+            return new ErrorResult(Messages.Brand.Exists(brand.Name));
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
-            _brandDal.Delete(brand);
+            var result = _brandDal.Get(b => b.Id == brand.Id);
+            if (result != null )
+            {
+                _brandDal.Delete(brand);
+                return new SuccessResult(Messages.Brand.Delete(result.Name));
+            }
+            return new ErrorResult(Messages.Error());
         }
 
-        public Brand GetById(int brandId)
+        public IDataResult<Brand> GetById(int brandId)
         {
-            return _brandDal.Get(b => b.Id == brandId);
+            var result = _brandDal.Any(b => b.Id == brandId);
+            if (result)
+            {
+                return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == brandId));
+            }
+            return new ErrorDataResult<Brand>(Messages.NotFound());
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
-            _brandDal.Update(brand);
+            var result = _brandDal.Get(b => b.Id == brand.Id);
+            if (result != null)
+            {
+                _brandDal.Update(brand);
+                return new SuccessResult(Messages.Brand.Update(brand.Name));
+            }
+            return new ErrorResult(Messages.NotFound());
         }
 
-        public Brand GetByName(string brandName)
+        public IDataResult<Brand> GetByName(string brandName)
         {
-            return _brandDal.Get(b => b.Name == brandName);
+            var result = _brandDal.Any(b => b.Name == brandName);
+            if (result)
+            {
+                return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Name == brandName));
+            }
+            return new ErrorDataResult<Brand>(Messages.NotFound());
         }
     }
 }

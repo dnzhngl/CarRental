@@ -1,6 +1,8 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.Constants;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,34 +17,62 @@ namespace CarRental.Business.Concrete
             _userDal = userDal;
         }
 
-        public void Add(User user)
+        public IResult Add(User user)
         {
-            _userDal.Add(user);
+            var result = _userDal.Any(u => u.Email == user.Email);
+            if (!result)
+            {
+                _userDal.Add(user);
+                return new SuccessResult(Messages.User.Add());
+            }
+            return new ErrorResult(Messages.User.Exists(user.Email));
         }
 
-        public void Delete(User user)
+        public IResult Delete(User user)
         {
-            _userDal.Delete(user);
+            var result = _userDal.Any(u => u.Id == user.Id);
+            if (result)
+            {
+                _userDal.Delete(user);
+                return new SuccessResult(Messages.User.Delete());
+            }
+            return new ErrorResult(Messages.NotFound());
         }
 
-        public List<User> GetAll()
+        public IDataResult<List<User>> GetAll()
         {
-            return _userDal.GetAll();
+            return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public User GetByEmail(string userEmail)
+        public IDataResult<User> GetByEmail(string userEmail)
         {
-            return _userDal.Get(u => u.Email == userEmail);
+            var result = _userDal.Any(u => u.Email == userEmail);
+            if (result)
+            {
+                return new SuccessDataResult<User>(_userDal.Get(u => u.Email == userEmail));
+            }
+            return new ErrorDataResult<User>(Messages.NotFound());
         }
 
-        public User GetById(int userId)
+        public IDataResult<User> GetById(int userId)
         {
-            return _userDal.Get(u => u.Id == userId);
+            var result = _userDal.Any(u => u.Id == userId);
+            if (result)
+            {
+                return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId));
+            }
+            return new ErrorDataResult<User>(Messages.NotFound());
         }
 
-        public void Update(User user)
+        public IResult Update(User user)
         {
-            _userDal.Update(user);
+            var result = _userDal.Any(u => u.Id == user.Id);
+            if (result)
+            {
+                _userDal.Update(user);
+                return new SuccessResult(Messages.User.Update());
+            }
+            return new ErrorResult(Messages.Error());
         }
     }
 }
