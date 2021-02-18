@@ -1,5 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Business.ValidationRules.FluentValidation;
+using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using Core.Utilities.Results;
@@ -16,6 +18,8 @@ namespace CarRental.Business.Concrete
         {
             _corporateCustomerDal = corporateCustomerDal;
         }
+
+        [ValidationAspect(typeof(CorporateCustomerValidator))]
         public IResult Add(CorporateCustomer customer)
         {
             var result = _corporateCustomerDal.Any(c => c.CompanyName == customer.CompanyName);
@@ -58,6 +62,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<CorporateCustomer>(Messages.NotFound());
         }
 
+        [ValidationAspect(typeof(CorporateCustomerValidator))]
         public IResult Update(CorporateCustomer customer)
         {
             var result = _corporateCustomerDal.Any(c => c.CompanyName == customer.CompanyName);

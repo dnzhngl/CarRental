@@ -1,5 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Business.ValidationRules.FluentValidation;
+using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using Core.Utilities.Results;
@@ -16,6 +18,8 @@ namespace CarRental.Business.Concrete
         {
             _rentalDal = rentalDal;
         }
+
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
             var result = _rentalDal.Any(r => r.CarId == rental.CarId && r.ReturnDate == null);
@@ -58,6 +62,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<Rental>(Messages.NotFound());
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
             var result = _rentalDal.Get(a => a.Id == rental.Id);

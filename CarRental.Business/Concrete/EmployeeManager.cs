@@ -1,5 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Business.ValidationRules.FluentValidation;
+using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using CarRental.Entities.DTOs;
@@ -18,6 +20,7 @@ namespace CarRental.Business.Concrete
             _employeeDal = employeeDal;
         }
 
+        [ValidationAspect(typeof(EmployeeValidator))]
         public IResult Add(Employee employee)
         {
             var result = _employeeDal.Any(e => e.IdentityNo == employee.IdentityNo);
@@ -69,7 +72,8 @@ namespace CarRental.Business.Concrete
             }
             return new ErrorDataResult<EmployeeDetailDto>(Messages.NotFound());
         }
-
+        
+        [ValidationAspect(typeof(EmployeeValidator))]
         public IResult Update(Employee employee)
         {
             var result = _employeeDal.Any(e => e.IdentityNo == employee.IdentityNo);

@@ -1,5 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Business.ValidationRules.FluentValidation;
+using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using Core.Utilities.Results;
@@ -16,6 +18,8 @@ namespace CarRental.Business.Concrete
         {
             _colorDal = colorDal;
         }
+
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
             var result = _colorDal.Any(c => c.Name == color.Name);
@@ -68,6 +72,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<Color>(Messages.NotFound());
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
             var result = _colorDal.Get(c => c.Id == color.Id);

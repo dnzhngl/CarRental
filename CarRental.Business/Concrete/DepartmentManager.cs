@@ -1,5 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Business.ValidationRules.FluentValidation;
+using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using Core.Utilities.Results;
@@ -17,6 +19,7 @@ namespace CarRental.Business.Concrete
             _departmentDal = departmentDal;
         }
 
+        [ValidationAspect(typeof(DepartmentValidator))]
         public IResult Add(Department department)
         {
             var result = _departmentDal.Any(d => d.Name == department.Name);
@@ -69,6 +72,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<Department>(Messages.NotFound());
         }
 
+        [ValidationAspect(typeof(DepartmentValidator))]
         public IResult Update(Department department)
         {
             var result = _departmentDal.Any(d => d.Name == department.Name);

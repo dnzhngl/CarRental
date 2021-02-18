@@ -18,6 +18,8 @@ namespace CarRental.Entities.DTOs
         public string EmployeeFirstName { get; set; }
         public string EmployeeLastName { get; set; }
 
+        public int CarId { get; set; }
+        public string Model { get; set; }
 
         public DateTime RentDate { get; set; }
         public Nullable<DateTime> ReturnDate { get; set; }

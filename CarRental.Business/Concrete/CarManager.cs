@@ -1,5 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Business.ValidationRules.FluentValidation;
+using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using CarRental.Entities.DTOs;
@@ -18,6 +20,7 @@ namespace CarRental.Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             if (car.Model.Length < 2 & car.DailyPrice <= 0)
@@ -54,6 +57,7 @@ namespace CarRental.Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             var result = _carDal.Get(c => c.Id == car.Id);

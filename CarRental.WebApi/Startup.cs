@@ -33,40 +33,40 @@ namespace CarRental.WebApi
 
             services.AddControllers();
 
-            services.AddSingleton<IBrandService, BrandManager>();
-            services.AddSingleton<IBrandDal, EfBrandDal>();
+            #region Before Autofac IoC implementation, there were a build in IoC
+            //services.AddSingleton<IBrandService, BrandManager>();
+            //services.AddSingleton<IBrandDal, EfBrandDal>();
 
-            services.AddSingleton<ICarService, CarManager>();
-            services.AddSingleton<ICarDal, EfCarDal>();
+            //services.AddSingleton<ICarService, CarManager>();
+            //services.AddSingleton<ICarDal, EfCarDal>();
 
-            services.AddSingleton<ICarTypeService, CarTypeManager>();
-            services.AddSingleton<ICarTypeDal, EfCarTypeDal>();
+            //services.AddSingleton<ICarTypeService, CarTypeManager>();
+            //services.AddSingleton<ICarTypeDal, EfCarTypeDal>();
 
-            services.AddSingleton<IColorService, ColorManager>();
-            services.AddSingleton<IColorDal, EfColorDal>();
+            //services.AddSingleton<IColorService, ColorManager>();
+            //services.AddSingleton<IColorDal, EfColorDal>();
 
-            services.AddSingleton<IDepartmentService, DepartmentManager>();
-            services.AddSingleton<IDepartmentDal, EfDepartmentDal>();
+            //services.AddSingleton<IDepartmentService, DepartmentManager>();
+            //services.AddSingleton<IDepartmentDal, EfDepartmentDal>();
 
-            services.AddSingleton<IRentalService, RentalManager>();
-            services.AddSingleton<IRentalDal, EfRentalDal>();
+            //services.AddSingleton<IRentalService, RentalManager>();
+            //services.AddSingleton<IRentalDal, EfRentalDal>();
 
-            services.AddSingleton<IUserService, UserManager>();
-            services.AddSingleton<IUserDal, EfUserDal>();
+            //services.AddSingleton<IUserService, UserManager>();
+            //services.AddSingleton<IUserDal, EfUserDal>();
 
-            services.AddSingleton<ICustomerService, CustomerManager>();
-            services.AddSingleton<ICustomerDal, EfCustomerDal>();
+            //services.AddSingleton<ICustomerService, CustomerManager>();
+            //services.AddSingleton<ICustomerDal, EfCustomerDal>();
 
-            services.AddSingleton<IIndividualCustomerService, IndividualCustomerManager>();
-            services.AddSingleton<IIndividualCustomerDal, EfIndividualCustomerDal>();
+            //services.AddSingleton<IIndividualCustomerService, IndividualCustomerManager>();
+            //services.AddSingleton<IIndividualCustomerDal, EfIndividualCustomerDal>();
 
-            services.AddSingleton<ICorporateCustomerService, CorporateCustomerManager>();
-            services.AddSingleton<ICorporateCustomerDal, EfCorporateCustomerDal>();
+            //services.AddSingleton<ICorporateCustomerService, CorporateCustomerManager>();
+            //services.AddSingleton<ICorporateCustomerDal, EfCorporateCustomerDal>();
 
-            services.AddSingleton<IEmployeeService, EmployeeManager>();
-            services.AddSingleton<IEmployeeDal, EfEmployeeDal>();
-
-
+            //services.AddSingleton<IEmployeeService, EmployeeManager>();
+            //services.AddSingleton<IEmployeeDal, EfEmployeeDal>();
+            #endregion
 
             services.AddSwaggerGen(c =>
             {
