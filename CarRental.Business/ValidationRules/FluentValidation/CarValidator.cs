@@ -15,6 +15,7 @@ namespace CarRental.Business.ValidationRules.FluentValidation
             RuleFor(c => c.Capacity).NotEmpty();
             RuleFor(c => c.DailyPrice).NotEmpty().GreaterThan(0);
             RuleFor(c => c.IsAvailable).NotEmpty();
+            RuleFor(c => c.Description).MaximumLength(200);
             RuleFor(c => c.BrandId).NotEmpty();
             RuleFor(c => c.ColorId).NotEmpty();
             RuleFor(c => c.CarTypeId).NotEmpty();
