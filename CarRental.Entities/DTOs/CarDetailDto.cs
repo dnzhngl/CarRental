@@ -8,6 +8,7 @@ namespace CarRental.Entities.DTOs
     public class CarDetailDto : IDto
     {
         public int Id { get; set; }
+        public string LicensePlate { get; set; }
         public byte Capacity { get; set; }
         public string Model { get; set; }
         public string ModelYear { get; set; }

@@ -14,14 +14,18 @@ namespace CarRental.Business.Concrete
     public class IndividualCustomerManager : IIndividualCustomerService
     {
         private readonly IIndividualCustomerDal _individualCustomerDal;
-        public IndividualCustomerManager(IIndividualCustomerDal individualCustomerDal)
+        //private readonly ICustomerDal _customerDal;
+        public IndividualCustomerManager(IIndividualCustomerDal individualCustomerDal /*ICustomerDal customerDal*/)
         {
             _individualCustomerDal = individualCustomerDal;
+            //_customerDal = customerDal;
         }
 
         [ValidationAspect(typeof(IndividualCustomerValidator))]
         public IResult Add(IndividualCustomer customer)
         {
+            //_customerDal.Add(customer); // Aynı individualCustomerDal'ın çalıştığı gibi ÇALIŞIYOR. 
+
             var result = _individualCustomerDal.Any(c => c.IdentityNo == customer.IdentityNo);
             if (!result)
             {

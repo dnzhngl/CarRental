@@ -25,6 +25,7 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  Id = c.Id,
+                                 LicensePlate = c.LicensePlate,
                                  Brand = b.Name,
                                  Color = cl.Name,
                                  CarType = ct.Name,
@@ -48,6 +49,7 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  Id = c.Id,
+                                 LicensePlate = c.LicensePlate,
                                  Brand = b.Name,
                                  Color = cl.Name,
                                  CarType = ct.Name,
@@ -72,6 +74,7 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  Id = c.Id,
+                                 LicensePlate = c.LicensePlate,
                                  Brand = b.Name,
                                  Color = cl.Name,
                                  CarType = ct.Name,

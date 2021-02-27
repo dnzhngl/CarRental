@@ -32,7 +32,6 @@ namespace CarRental.ConsoleUI
 
         }
 
-
         #region SeedData Try
         //using (var context = new CarRentalContext())
         //{

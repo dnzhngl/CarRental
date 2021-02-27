@@ -74,5 +74,40 @@ namespace CarRental.WebApi.Controllers
             }
             return BadRequest(result);
         }
+
+
+        [HttpGet("GetAllRentalsDetails")]
+        public IActionResult GetAllRentalsDetails()
+        {
+            var result = _rentalService.GetAllRentalsDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        
+        [HttpGet("GetRentalDetails")]
+        public IActionResult GetRentalDetails(int rentalId)
+        {
+            var result = _rentalService.GetRentalDetails(rentalId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAllNotReturnedRentalsDetails")]
+        public IActionResult GetAllNotReturnedRentalsDetails()
+        {
+            var result = _rentalService.GetAllNotReturnedRentalsDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

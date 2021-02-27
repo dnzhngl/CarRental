@@ -46,11 +46,13 @@ namespace CarRental.Business.DependencyResolvers.Autofac
             builder.RegisterType<CorporateCustomerManager>().As<ICorporateCustomerService>().SingleInstance();
             builder.RegisterType<EfCorporateCustomerDal>().As<ICorporateCustomerDal>().SingleInstance();
 
-
             builder.RegisterType<RentalManager>().As<IRentalService>().InstancePerDependency();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>().InstancePerDependency();
 
+            builder.RegisterType<CarImageManager>().As<ICarImageService>().InstancePerDependency();
+            builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().InstancePerDependency();
 
+            //builder.RegisterType<FileHelper>().As<IFileHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

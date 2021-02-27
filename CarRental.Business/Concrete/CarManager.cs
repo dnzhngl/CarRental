@@ -2,6 +2,7 @@
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
+using CarRental.Core.Utilities.Business;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using CarRental.Entities.DTOs;
@@ -23,9 +24,10 @@ namespace CarRental.Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.Model.Length < 2 & car.DailyPrice <= 0)
+            IResult result = BusinessRules.Run(CheckIfLicensePlateIsExists(car.LicensePlate));
+            if (result != null)
             {
-                return new ErrorResult(Messages.Error());
+                return result;
             }
             _carDal.Add(car);
             return new SuccessResult(Messages.Car.Add(car.Model, car.ModelYear));
@@ -33,13 +35,13 @@ namespace CarRental.Business.Concrete
 
         public IResult Delete(Car car)
         {
-            var result = _carDal.Get(c => c.Id == car.Id);
+            IResult result = BusinessRules.Run(CheckIfExists(car.Id));
             if (result != null)
             {
-                _carDal.Delete(car);
-                return new SuccessResult(Messages.Car.Delete(result.Model, result.ModelYear));
+                return new ErrorResult(Messages.Error());
             }
-            return new ErrorResult(Messages.Error());
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.Car.Delete(car.Model, car.ModelYear));
         }
 
         public IDataResult<Car> GetById(int carId)
@@ -60,13 +62,14 @@ namespace CarRental.Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
-            var result = _carDal.Get(c => c.Id == car.Id);
+            IResult result = BusinessRules.Run(CheckIfExists(car.Id), CheckIfLicensePlateIsExists(car.LicensePlate));
+
             if (result != null)
             {
-                _carDal.Update(car);
-                return new SuccessResult(Messages.Car.Update(result.Model, result.ModelYear));
+                return result;
             }
-            return new ErrorResult(Messages.Error());
+            _carDal.Update(car);
+            return new SuccessResult(Messages.Car.Update(car.Model, car.ModelYear));
         }
 
         public IDataResult<List<Car>> GetAllByCarTypeId(int carTypeId)
@@ -124,5 +127,26 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<List<CarDetailDto>>(Messages.NotFound());
         }
 
+
+        // Business code blocks
+        private IResult CheckIfLicensePlateIsExists(string licensePlate)
+        {
+            var result = _carDal.Any(c => c.LicensePlate == licensePlate);
+            if (result)
+            {
+                return new ErrorResult(Messages.Car.ExistsPlateNumber(licensePlate));
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfExists(int id)
+        {
+            var result = _carDal.Any(c => c.Id == id);
+            if (result)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult(Messages.NotFound());
+        }
     }
 }

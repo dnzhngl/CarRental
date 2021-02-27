@@ -11,8 +11,8 @@ namespace CarRental.Business.ValidationRules.FluentValidation
         public EmployeeValidator()
         {
             RuleFor(e => e.IdentityNo).NotEmpty().Length(11);
-            RuleFor(e => e.FirstName).NotEmpty().MinimumLength(3);
-            RuleFor(e => e.LastName).NotEmpty().MinimumLength(3);
+            RuleFor(e => e.FirstName).NotEmpty().Length(2,30);
+            RuleFor(e => e.LastName).NotEmpty().Length(2,30);
             RuleFor(e => e.Gender).NotEmpty();
             RuleFor(e => e.DOB).NotEmpty();
             RuleFor(e => e.Address).NotEmpty().Length(5, 150);

@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.ConsoleUI", "CarR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Core", "CarRental.Core\CarRental.Core.csproj", "{6BC9BE4E-9B5B-4D9B-92F9-7367C2714799}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SeedData", "SeedData", "{62123176-8ED1-4036-BF04-A436CA7D4CEB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{62123176-8ED1-4036-BF04-A436CA7D4CEB}"
 	ProjectSection(SolutionItems) = preProject
 		SeedData.txt = SeedData.txt
+		SqlQuery_CreateDb.sql = SqlQuery_CreateDb.sql
+		SqlTableCreations.txt = SqlTableCreations.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.WebApi", "CarRental.WebApi\CarRental.WebApi.csproj", "{A596D93E-71C7-4E57-B63F-B09E04914CB2}"

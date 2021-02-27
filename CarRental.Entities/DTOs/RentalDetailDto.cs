@@ -10,15 +10,13 @@ namespace CarRental.Entities.DTOs
     {
         public int RentalId { get; set; }
 
-        public int CustomerId { get; set; }
-        public string CustomerFirstName { get; set; }
-        public string CustomerLastName { get; set; }
+        public string CustomerFullName { get; set; }
 
-        public int EmployeeId { get; set; }
-        public string EmployeeFirstName { get; set; }
-        public string EmployeeLastName { get; set; }
-
-        public int CarId { get; set; }
+        //public int EmployeeId { get; set; }
+        //public string EmployeeFirstName { get; set; }
+        //public string EmployeeLastName { get; set; }
+        public string LicensePlate { get; set; }
+        public string BrandName { get; set; }
         public string Model { get; set; }
 
         public DateTime RentDate { get; set; }

@@ -2,6 +2,8 @@ using CarRental.Business.Abstract;
 using CarRental.Business.Concrete;
 using CarRental.DataAccess.Abstract;
 using CarRental.DataAccess.Concrete.EntityFramework;
+using CarRental.WebApi.Helpers.Abstract;
+using CarRental.WebApi.Helpers.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,9 @@ namespace CarRental.WebApi
         {
 
             services.AddControllers();
+
+
+            services.AddScoped<IFileHelper, FileHelper>();
 
             #region Before Autofac IoC implementation, there were a build in IoC
             //services.AddSingleton<IBrandService, BrandManager>();
@@ -68,6 +73,7 @@ namespace CarRental.WebApi
             //services.AddSingleton<IEmployeeDal, EfEmployeeDal>();
             #endregion
 
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarRental.WebApi", Version = "v1" });
@@ -89,6 +95,8 @@ namespace CarRental.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

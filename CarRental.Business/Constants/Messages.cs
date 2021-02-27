@@ -51,7 +51,10 @@ namespace CarRental.Business.Constants
             {
                 return $"{model} - {modelYear} - {color} bilgilerine sahip bir araba sistemde kayıtlıdır.";
             }
-
+            public static string ExistsPlateNumber(string licensePlate)
+            {
+                return $"{licensePlate} bilgilerine sahip bir araba sistemde kayıtlıdır.";
+            }
         }
         public static class CarType
         {
@@ -224,6 +227,38 @@ namespace CarRental.Business.Constants
             public static string Exists(string emailAddress)
             {
                 return $"{emailAddress} bilgilerine sahip bir kullanıcı sistemde kayıtlıdır.";
+            }
+
+        }
+        public static class CarImage
+        {
+            public static string Add(bool isPlural)
+            {
+                if (isPlural)
+                {
+                    return $"Fotoğraflar sisteme başarı ile eklenmiştir.";
+                }
+                return $"Fotoğraf sisteme başarı ile eklenmiştir.";
+            }
+            public static string Update(bool isPlural)
+            {
+                if (isPlural)
+                {
+                    return $"Fotoğraflar başarılı bir şekilde güncellenmiştir.";
+                }
+                return $"Fotoğraf başarılı bir şekilde güncellenmiştir.";
+            }
+            public static string Delete(bool isPlural)
+            {
+                if (isPlural)
+                {
+                    return $"Fotoğraflar sistemden başarılı bir şekilde silinmiştir.";
+                }
+                return $"Fotoğraf sistemden başarılı bir şekilde silinmiştir.";
+            }
+            public static string NumberOfPhotografsHasReachedLimit(int limit)
+            {
+                return $"Bir arabanın en fazla {limit} fotoğrafı olabilir.";
             }
 
         }

@@ -8,6 +8,7 @@ namespace CarRental.Entities.Concrete
     public class Car : IEntity
     {
         public int Id { get; set; }
+        public string LicensePlate { get; set; }
         public byte Capacity { get; set; }
         public string Model { get; set; }
         public string ModelYear { get; set; }

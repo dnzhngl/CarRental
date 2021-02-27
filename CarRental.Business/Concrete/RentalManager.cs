@@ -4,6 +4,7 @@ using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
+using CarRental.Entities.DTOs;
 using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,6 @@ namespace CarRental.Business.Concrete
             }
             return new ErrorResult(Messages.Error());
         }
-
         public IResult Delete(Rental rental)
         {
             var result = _rentalDal.Get(a => a.Id == rental.Id);
@@ -41,7 +41,6 @@ namespace CarRental.Business.Concrete
             }
             return new ErrorResult(Messages.NotFound());
         }
-
         public IDataResult<List<Rental>> GetAll()
         {
             var result = _rentalDal.Count();
@@ -51,7 +50,6 @@ namespace CarRental.Business.Concrete
             }
             return new ErrorDataResult<List<Rental>>(Messages.NotFound());
         }
-
         public IDataResult<Rental> GetById(int rentalId)
         {
             var result = _rentalDal.Get(a => a.Id == rentalId);
@@ -60,6 +58,33 @@ namespace CarRental.Business.Concrete
                 return new SuccessDataResult<Rental>(result);
             }
             return new ErrorDataResult<Rental>(Messages.NotFound());
+        }
+        public IDataResult<RentalDetailDto> GetRentalDetails(int rentalId)
+        {
+            var result = _rentalDal.Any(r => r.Id == rentalId);
+            if (result)
+            {
+                return new SuccessDataResult<RentalDetailDto>(_rentalDal.GetRentalDetails(rentalId));
+            }
+            return new ErrorDataResult<RentalDetailDto>(Messages.NotFound());
+        }
+        public IDataResult<List<RentalDetailDto>> GetAllNotReturnedRentalsDetails()
+        {
+            var result = _rentalDal.Count(r => r.ReturnDate == null);
+            if (result > 0)
+            {
+                return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetAllNotReturnedRentalsDetails());
+            }
+            return new ErrorDataResult<List<RentalDetailDto>>(Messages.NotFound());
+        }
+        public IDataResult<List<RentalDetailDto>> GetAllRentalsDetails()
+        {
+            var result = _rentalDal.Count();
+            if (result > 0)
+            {
+                return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetAllRentalsDetails());
+            }
+            return new ErrorDataResult<List<RentalDetailDto>>(Messages.NotFound());
         }
 
         [ValidationAspect(typeof(RentalValidator))]
