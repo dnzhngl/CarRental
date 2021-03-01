@@ -19,6 +19,7 @@ namespace CarRental.WebApi.Helpers.Concrete
         {
             _webHostEnvironment = webHostEnvironment;
         }
+
         /// <summary>
         /// Check if the file is null or not.
         /// </summary>
@@ -85,13 +86,27 @@ namespace CarRental.WebApi.Helpers.Concrete
         }
 
         /// <summary>
-        /// Checks whether the folder/directory exists or not under the wwwroot directory. If the folder is not exist, it creates.
+        /// Search for the foldername under given subDirectory folder, that is under the wwwroot directory ,if not found, creates one with the given folder name.
         /// </summary>
         /// <param name="folderName">Foldername should be given for the search and creation of the directory.</param>
         /// <param name="subDirectory">subDirectory states for the any of the directory under the wwwroot. It is nullable.</param>
-        public void CheckIfFolderExists(string folderName, string subDirectory = null)
+        public void CheckIfFolderExists(string folderName, string subDirectory)
         {
             var path = Path.Combine($"{_webHostEnvironment.WebRootPath}/{subDirectory}/{folderName}");
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        /// <summary>
+        /// Search for the foldername under the wwwroot directory if not found, creates one with the given name.
+        /// </summary>
+        /// <param name="folderName">Foldername should be given for the search and creation of the directory.</param>
+        public void CheckIfFolderExists(string folderName)
+        {
+            var path = Path.Combine($"{_webHostEnvironment.WebRootPath}/{folderName}");
 
             if (!Directory.Exists(path))
             {
