@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CarRental.WebApi.Controllers
@@ -44,7 +45,9 @@ namespace CarRental.WebApi.Controllers
         [HttpPost("add")]
         public IActionResult Add(Employee employee)
         {
-            var result = _employeeService.Add(employee);
+            string passwordString = Encoding.ASCII.GetString(employee.PasswordHash);
+          //  byte[] password = Encoding.ASCII.GetBytes(passwordString);
+            var result = _employeeService.Add(employee, passwordString);
             if (result.Success)
             {
                 return Ok(result);

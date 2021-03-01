@@ -16,7 +16,7 @@ namespace CarRental.Business.ValidationRules.FluentValidation
             RuleFor(c => c.Address).NotEmpty().Length(5, 150);
             RuleFor(c => c.PhoneNumber).NotEmpty().Length(9, 20);
             RuleFor(c => c.Email).NotEmpty().Length(11, 30);
-            RuleFor(c => c.PasswordHash).NotEmpty().Length(5, 10);
+            RuleFor(c => c.PasswordHash).NotEmpty();
             RuleFor(c => c.JoinDate).NotEmpty().LessThanOrEqualTo(DateTime.Now);
         }
 

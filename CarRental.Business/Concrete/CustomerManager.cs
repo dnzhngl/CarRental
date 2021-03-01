@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
@@ -19,13 +20,13 @@ namespace CarRental.Business.Concrete
         }
 
         #region _customerDal
+
         public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
             return new SuccessResult();
 
         }
-
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);

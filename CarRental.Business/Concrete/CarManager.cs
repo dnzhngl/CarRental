@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace CarRental.Business.Concrete
             _carDal = carDal;
         }
 
+        [SecuredOperation("Car.Add, Admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -33,6 +35,7 @@ namespace CarRental.Business.Concrete
             return new SuccessResult(Messages.Car.Add(car.Model, car.ModelYear));
         }
 
+        [SecuredOperation("Car.Delete, Admin")]
         public IResult Delete(Car car)
         {
             IResult result = BusinessRules.Run(CheckIfExists(car.Id));
@@ -56,9 +59,16 @@ namespace CarRental.Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+            var result = _carDal.Count();
+            if (result > 0)
+            {
+                return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+            }
+            return new ErrorDataResult<List<Car>>(Messages.NotFound());
         }
 
+
+        [SecuredOperation("Car.Update, Admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {

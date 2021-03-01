@@ -45,6 +45,14 @@ namespace CarRental.WebApi.Helpers.Abstract
         void CheckIfFolderExists(string folderName, string subDirectory);
 
         /// <summary>
+        /// Check for the given file's type and foldername.
+        /// </summary>
+        /// <param name="file">File must be given in the type of IFormFile.</param>
+        /// <param name="folderName">out string type parameter is returning.</param>
+        /// <returns>Returns file type with folder name and related foldername with the parameter of out type.</returns>
+        public string CheckFileTypeWithFolderName(IFormFile file, out string folderName);
+
+        /// <summary>
         /// Generates file name of type Guid with the file extension.
         /// </summary>
         /// <param name="file">A File must be given in type of IFormFile.</param>

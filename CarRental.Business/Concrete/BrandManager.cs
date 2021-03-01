@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace CarRental.Business.Concrete
             _brandDal = brandDal;
         }
 
+        [SecuredOperation("Brand.Add, Admin")]
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
@@ -33,6 +35,7 @@ namespace CarRental.Business.Concrete
             return new ErrorResult(Messages.Brand.Exists(brand.Name));
         }
 
+        [SecuredOperation("Brand.Delete, Admin")]
         public IResult Delete(Brand brand)
         {
             var result = _brandDal.Get(b => b.Id == brand.Id);
@@ -53,12 +56,12 @@ namespace CarRental.Business.Concrete
             }
             return new ErrorDataResult<Brand>(Messages.NotFound());
         }
-
         public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
+        [SecuredOperation("Brand.Update, Admin")]
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {

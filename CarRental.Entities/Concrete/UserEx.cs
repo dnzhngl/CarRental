@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CarRental.Entities.Concrete
 {
-    public class User : IEntity
+    public class UserEx : IEntity
     {
         public int Id { get; set; }
         public string Email { get; set; }

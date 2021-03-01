@@ -1,7 +1,9 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
+using CarRental.Core.Utilities.Security.Hashing;
 using CarRental.DataAccess.Abstract;
 using CarRental.Entities.Concrete;
 using CarRental.Entities.DTOs;
@@ -19,13 +21,17 @@ namespace CarRental.Business.Concrete
         {
             _employeeDal = employeeDal;
         }
-
+        //[SecuredOperation("")]
         [ValidationAspect(typeof(EmployeeValidator))]
-        public IResult Add(Employee employee)
+        public IResult Add(Employee employee, string password)
         {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             var result = _employeeDal.Any(e => e.IdentityNo == employee.IdentityNo);
             if (!result)
             {
+                employee.PasswordHash = passwordHash;
+                employee.PasswordSalt = passwordSalt;
                 _employeeDal.Add(employee);
                 return new SuccessResult(Messages.Employee.Add(employee.FirstName, employee.LastName));
             }

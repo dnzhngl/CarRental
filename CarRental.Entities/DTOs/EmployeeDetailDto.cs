@@ -17,7 +17,6 @@ namespace CarRental.Entities.DTOs
         public string Department { get; set; }
         public string Position { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }
         public DateTime JoinDate { get; set; }
 
     }

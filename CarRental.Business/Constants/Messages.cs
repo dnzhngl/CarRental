@@ -228,6 +228,10 @@ namespace CarRental.Business.Constants
             {
                 return $"{emailAddress} bilgilerine sahip bir kullanıcı sistemde kayıtlıdır.";
             }
+            public static string NotFound()
+            {
+                return "Kullanıcı bulunamadı...";
+            }
 
         }
         public static class CarImage
@@ -261,6 +265,21 @@ namespace CarRental.Business.Constants
                 return $"Bir arabanın en fazla {limit} fotoğrafı olabilir.";
             }
 
+        }
+        public static class Authorization
+        {
+            public static string AuthorizationDenied()
+            {
+                return "Yetkiniz yoktur.";
+            }
+        }
+        public static class Authentication
+        {
+            public static string PasswordError = "Şifre hatalı";
+            public static string SuccessfulLogin = "Sisteme giriş başarılı";
+            public static string UserAlreadyExists = "Bu kullanıcı zaten mevcut";
+            public static string UserRegistered = "Kullanıcı başarıyla kaydedildi";
+            public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
         }
     }
 }

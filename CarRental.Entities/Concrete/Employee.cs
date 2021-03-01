@@ -1,4 +1,5 @@
 ﻿using CarRental.Core.Entities;
+using CarRental.Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

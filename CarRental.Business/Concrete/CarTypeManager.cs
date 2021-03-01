@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
@@ -19,6 +20,7 @@ namespace CarRental.Business.Concrete
             _carTypeDal = carTypeDal;
         }
 
+        [SecuredOperation("CarType.Add, Admin")]
         [ValidationAspect(typeof(CarTypeValidator))]
         public IResult Add(CarType carType)
         {
@@ -31,6 +33,7 @@ namespace CarRental.Business.Concrete
             return new ErrorResult(Messages.CarType.Exists(carType.Name));
         }
 
+        [SecuredOperation("CarType.Delete, Admin")]
         public IResult Delete(CarType carType)
         {
             var result = _carTypeDal.Any(c => c.Id == carType.Id);
@@ -62,6 +65,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<List<CarType>>(Messages.NotFound());
         }
 
+        [SecuredOperation("CarType.Update, Admin")]
         [ValidationAspect(typeof(CarTypeValidator))]
         public IResult Update(CarType carType)
         {

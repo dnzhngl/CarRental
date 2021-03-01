@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
@@ -19,6 +20,7 @@ namespace CarRental.Business.Concrete
             _colorDal = colorDal;
         }
 
+        [SecuredOperation("Color.Add, Admin")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
@@ -31,6 +33,7 @@ namespace CarRental.Business.Concrete
             return new ErrorResult(Messages.Color.Exists(color.Name));
         }
 
+        [SecuredOperation("Color.Delete, Admin")]
         public IResult Delete(Color color)
         {
             var result = _colorDal.Get(c => c.Id == color.Id);
@@ -72,6 +75,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<Color>(Messages.NotFound());
         }
 
+        [SecuredOperation("Color.Update, Admin")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {

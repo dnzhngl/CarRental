@@ -1,4 +1,5 @@
-﻿using CarRental.Entities.Concrete;
+﻿using CarRental.Core.Entities.Concrete;
+using CarRental.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
         #region Many to Manyr Relationship with Cars and Rentals
         //public DbSet<RentedCar> RentedCars { get; set; }

@@ -86,6 +86,44 @@ namespace CarRental.WebApi.Helpers.Concrete
         }
 
         /// <summary>
+        /// Check for the given file's type and foldername.
+        /// </summary>
+        /// <param name="file">File must be given in the type of IFormFile.</param>
+        /// <param name="folderName">out string type parameter is returning.</param>
+        /// <returns>Returns file type with folder name and related foldername with the parameter of out type.</returns>
+        public string CheckFileTypeWithFolderName(IFormFile file, out string folderName)
+        {
+            string fileType = file.ContentType;
+            if (fileType.Contains("image"))
+            {
+                folderName = "Images";
+                return "image";
+            }
+            else if (fileType.Contains("text"))
+            {
+                folderName = "Files";
+                return "text";
+            }
+            else if (fileType.Contains("audio"))
+            {
+                folderName = "Audios";
+                return "audio";
+            }
+            else if (fileType.Contains("video"))
+            {
+                folderName = "Videos";
+                return "video";
+            }
+            else if (fileType.Contains("application"))
+            {
+                folderName = "Applications";
+                return "application";
+            }
+            folderName = String.Empty;
+            return "Unknown file type!";
+        }
+
+        /// <summary>
         /// Search for the foldername under given subDirectory folder, that is under the wwwroot directory ,if not found, creates one with the given folder name.
         /// </summary>
         /// <param name="folderName">Foldername should be given for the search and creation of the directory.</param>

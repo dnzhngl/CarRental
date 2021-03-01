@@ -1,5 +1,5 @@
 ﻿using CarRental.Business.Abstract;
-using CarRental.Entities.Concrete;
+using CarRental.Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

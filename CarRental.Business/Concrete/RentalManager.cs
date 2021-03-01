@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
@@ -20,6 +21,7 @@ namespace CarRental.Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        [SecuredOperation("Rental.Add, Admin")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
@@ -31,6 +33,8 @@ namespace CarRental.Business.Concrete
             }
             return new ErrorResult(Messages.Error());
         }
+
+        [SecuredOperation("Rental.Delete, Admin")]
         public IResult Delete(Rental rental)
         {
             var result = _rentalDal.Get(a => a.Id == rental.Id);
@@ -87,6 +91,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<List<RentalDetailDto>>(Messages.NotFound());
         }
 
+        [SecuredOperation("Rental.Update, Admin")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {

@@ -11,7 +11,7 @@ namespace CarRental.Business.Abstract
     {
         IDataResult<List<Employee>> GetAll();
         IDataResult<Employee> GetById(int employeeId);
-        IResult Add(Employee employee);
+        IResult Add(Employee employee, string password);
         IResult Delete(Employee employee);
         IResult Update(Employee employee);
 

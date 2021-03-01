@@ -1,4 +1,5 @@
 ﻿using CarRental.Business.Abstract;
+using CarRental.Business.BusinessAspect;
 using CarRental.Business.Constants;
 using CarRental.Business.ValidationRules.FluentValidation;
 using CarRental.Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace CarRental.Business.Concrete
             _carImageDal = carImageDal;
         }
 
+        [SecuredOperation("CarImage.Add, Admin")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(CarImage carImage)
         {
@@ -33,6 +35,7 @@ namespace CarRental.Business.Concrete
             return new SuccessResult(Messages.CarImage.Add(isPlural: false));
         }
 
+        [SecuredOperation("CarImage.Delete, Admin")]
         public IResult Delete(CarImage carImage)
         {
             var result = _carImageDal.Any(c => c.Id == carImage.Id);
@@ -64,6 +67,7 @@ namespace CarRental.Business.Concrete
             return new ErrorDataResult<CarImage>(Messages.NotFound());
         }
 
+        [SecuredOperation("CarImage.Update, Admin")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(CarImage carImage)
         {

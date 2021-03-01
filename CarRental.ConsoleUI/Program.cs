@@ -6,6 +6,7 @@ using CarRental.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace CarRental.ConsoleUI
 {
@@ -209,12 +210,12 @@ namespace CarRental.ConsoleUI
                 Address = "İzmir",
                 PhoneNumber = "05554443322",
                 Email = "ahmet.caliskan@carRental.com",
-                PasswordHash = "23456",
+                PasswordHash = Encoding.ASCII.GetBytes("12345"),
                 DepartmentId = 1,
                 Position = "Satis Temsilcisi",
                 JoinDate = DateTime.Now
             };
-            employeeManager.Add(employee);
+            employeeManager.Add(employee, "12345");
         }
 
         private static void AddIndividualCustomer(IndividualCustomerManager individualCustomerManager)
@@ -228,7 +229,7 @@ namespace CarRental.ConsoleUI
                 PhoneNumber = "05556667788",
                 Address = "İzmir",
                 Email = "ali.yaman@hotmail.com",
-                PasswordHash = "12345",
+                PasswordHash = Encoding.ASCII.GetBytes("12345"),
                 JoinDate = DateTime.Now
             };
 

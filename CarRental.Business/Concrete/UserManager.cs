@@ -1,7 +1,7 @@
 ﻿using CarRental.Business.Abstract;
 using CarRental.Business.Constants;
+using CarRental.Core.Entities.Concrete;
 using CarRental.DataAccess.Abstract;
-using CarRental.Entities.Concrete;
 using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
@@ -41,10 +41,15 @@ namespace CarRental.Business.Concrete
 
         public IDataResult<List<User>> GetAll()
         {
+            var result = _userDal.Count();
+            if (result <= 0)
+            {
+                return new ErrorDataResult<List<User>>(Messages.NotFound());
+            }
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public IDataResult<User> GetByEmail(string userEmail)
+        public IDataResult<User> GetByMail(string userEmail)
         {
             var result = _userDal.Any(u => u.Email == userEmail);
             if (result)
@@ -73,6 +78,16 @@ namespace CarRental.Business.Concrete
                 return new SuccessResult(Messages.User.Update());
             }
             return new ErrorResult(Messages.Error());
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            var result = _userDal.Any(u => u.Id == user.Id);
+            if (result)
+            {
+                return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+            }
+            return new ErrorDataResult<List<OperationClaim>>(Messages.Authorization.AuthorizationDenied());
         }
     }
 }

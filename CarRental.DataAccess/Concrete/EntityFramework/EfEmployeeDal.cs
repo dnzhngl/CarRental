@@ -29,7 +29,6 @@ namespace CarRental.DataAccess.Concrete.EntityFramework
                                  PhoneNumber = e.PhoneNumber,
                                  Address = e.Address,
                                  Email = u.Email,
-                                 PasswordHash = u.PasswordHash,
                                  Department = d.Name,
                                  Position = e.Position,
                                  JoinDate = u.JoinDate,
